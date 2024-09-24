@@ -17,3 +17,7 @@ Content-Type: application/json
     "username": "tonystork",
     "password": "tony123"
 }
+
+###
+
+POST http://localhost:5000/api/auth/signout

@@ -104,7 +104,11 @@ export const signin = async (req, res, next) => {
 };
 
 export const signout = async (req, res) => {
-  res.json({
-    data: 'You hhit the signout end point',
-  });
+  try {
+    res.cookie('jwt', '', {maxAge:0});
+    res.status(200).json({message: 'Logged out successfully'});
+  } catch (err) {
+    console.error(`Error in signout controller ${err.message}`);
+    next(err);
+  }
 };
