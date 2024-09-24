@@ -112,3 +112,13 @@ export const signout = async (req, res) => {
     next(err);
   }
 };
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(`Error in getMe controller ${err.message}`);
+    next(err);
+  }
+}
