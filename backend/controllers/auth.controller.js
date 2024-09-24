@@ -17,7 +17,9 @@ export const signup = async (req, res, next) => {
     }
 
     if (password.length < 6) {
-      return next(errorHandler(400, 'Password must be atleast 6 characters long'));
+      return next(
+        errorHandler(400, 'Password must be atleast 6 characters long')
+      );
     }
 
     const existingUser = await User.findOne({ username });
@@ -45,8 +47,6 @@ export const signup = async (req, res, next) => {
       generateTokenAndSetCookie(newUser._id, res);
       await newUser.save();
 
-      console.log('newUser._doc', newUser._doc);
-
       res.status(201).json({
         _id: newUser._id,
         fullName: newUser.fullName,
@@ -61,22 +61,46 @@ export const signup = async (req, res, next) => {
       console.error(`Error while saving user ${err.message}`);
       next(err);
     }
-
-    // if (newUser) {
-
-    // } else {
-    //   return res.status(400).json({error: 'Inalid user data'});
-    // }
   } catch (err) {
     console.error('Error in signup controller', err.message);
     next(err);
   }
 };
 
-export const signin = async (req, res) => {
-  res.json({
-    data: 'You hit the signin end point',
-  });
+export const signin = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return next(errorHandler(400, 'All fields are required'));
+    }
+
+    const user = await User.findOne({ username });
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      user?.password || ''
+    );
+
+    if (!user || !isPasswordCorrect) {
+      return next(errorHandler(400, 'Invalid username or password'));
+    }
+
+    generateTokenAndSetCookie(user._id, res);
+
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+      followers: user.followers,
+      following: user.following,
+      profileImg: user.profileImg,
+      coverImg: user.coverImg,
+    });
+  } catch (err) {
+    console.error('Error in signin controller', err.message);
+    next(err);
+  }
 };
 
 export const signout = async (req, res) => {

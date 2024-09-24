@@ -2,8 +2,18 @@ POST http://localhost:5000/api/auth/signup
 Content-Type: application/json
 
 {
-    "username": "tonystory",
+    "username": "tonystork",
     "fullName": "Tony Stork",
     "password": "tony123",
     "email": "tonystork@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/api/auth/signin 
+Content-Type: application/json
+
+{
+    "username": "tonystork",
+    "password": "tony123"
 }
