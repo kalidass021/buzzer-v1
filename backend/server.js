@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import authRoutes from './routes/auth.route.js';
 import connectMongoDB from './db/connectMongoDB.js';
+import authRoutes from './routes/auth.route.js';
+import userRoutes from './routes/user.route.js';
+
 
 const app = express();
 // dot env configuration
@@ -17,6 +19,7 @@ app.use(express.urlencoded({ extended: true })); // to parse form data(urlencode
 app.use(cookieParser()); // extracting cookies from the browser
 
 app.use('/api/auth/', authRoutes);
+app.use('/api/user', userRoutes);
 
 // middleware to handle the errors
 app.use((err, req, res, next) => {

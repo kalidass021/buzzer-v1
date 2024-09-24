@@ -26,3 +26,8 @@ POST http://localhost:5000/api/auth/signout
 ###
 
 GET http://localhost:5000/api/auth/me
+
+
+###
+
+GET http://localhost:5000/api/user/profile/tonystork
