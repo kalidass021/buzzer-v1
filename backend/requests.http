@@ -1,3 +1,5 @@
+// auth routes
+// signup
 POST http://localhost:5000/api/auth/signup
 Content-Type: application/json
 
@@ -10,6 +12,7 @@ Content-Type: application/json
 
 ###
 
+// signin
 POST http://localhost:5000/api/auth/signin 
 Content-Type: application/json
 
@@ -19,15 +22,23 @@ Content-Type: application/json
 }
 
 ###
-
+// signout
 POST http://localhost:5000/api/auth/signout
 
 
 ###
 
+// getMe
 GET http://localhost:5000/api/auth/me
 
 
 ###
 
+// user routes
+// get user profile
 GET http://localhost:5000/api/user/profile/tonystork
+
+###
+
+// follow or unfollow
+POST http://localhost:5000/api/user/follow/66f18d49fc50b0c7672a296b

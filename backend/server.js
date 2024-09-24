@@ -18,7 +18,7 @@ app.use(express.json()); // to parse req.body
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cookieParser()); // extracting cookies from the browser
 
-app.use('/api/auth/', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
 // middleware to handle the errors
