@@ -42,3 +42,10 @@ GET http://localhost:5000/api/user/profile/tonystork
 
 // follow or unfollow
 POST http://localhost:5000/api/user/follow/66f18d49fc50b0c7672a296b
+
+
+###
+
+// suggested users
+
+GET http://localhost:5000/api/user/suggested

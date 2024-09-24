@@ -43,7 +43,7 @@ export const followUnfollowUser = async (req, res, next) => {
       await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
       // for unfollow we don't need to sent notification
       // Todo: return the id of the user as a response
-      res.status(200).json({message: 'User unfollowed successfully'});
+      res.status(200).json({ message: 'User unfollowed successfully' });
     } else {
       // follow the user
       // add follower user in the target user's followers arr
@@ -60,10 +60,44 @@ export const followUnfollowUser = async (req, res, next) => {
 
       await newNotification.save();
       // Todo: return the id of the user as a response
-      res.status(200).json({message: 'User followed successfully'});
+      res.status(200).json({ message: 'User followed successfully' });
     }
   } catch (err) {
     console.error(`Error in followUnfollowUser: ${err.message}`);
     next(err);
   }
 };
+
+export const getSuggestedUsers = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+
+    const usersFollowedByMe = await User.findById(userId).select('following');
+    // exclude the current user from the suggestedUsers arr
+    // get some users excluding the current user
+    const users = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: userId },
+        },
+      },
+      { $sample: { size: 10 } },
+    ]);
+
+    // exclude the users already followed by me
+    const filteredUsers = users.filter(
+      (user) => !usersFollowedByMe.following.includes(user._id)
+    );
+    const suggestedUsers = filteredUsers.slice(0, 4);
+
+    // suggestedUsers contains password
+    // remove the password from the suggestedUsers
+    suggestedUsers.forEach((user) => (user.password = null));
+
+    res.status(200).json(suggestedUsers);
+  } catch (err) {
+    console.error(`Error in suggestedUsers: ${err.message}`);
+    next(err);
+  }
+};
+
