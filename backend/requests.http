@@ -49,3 +49,18 @@ POST http://localhost:5000/api/user/follow/66f18d49fc50b0c7672a296b
 // suggested users
 
 GET http://localhost:5000/api/user/suggested
+
+
+###
+
+// update profile
+PUT http://localhost:5000/api/user/update
+Content-Type: application/json
+
+{
+    "email": "tonystork123@gmail.com",
+    # "currentPassword": "tony1234",
+    # "newPassword": "tony123",
+    "bio": "I'm tony stork",
+    "link": "tonystork.com"
+}
