@@ -76,3 +76,21 @@ Content-Type: application/json
 {
     "text": "My second post"
 }
+
+
+###
+
+// delete post
+DELETE http://localhost:5000/api/post/66f42e35bca2de6d1d9233e6
+
+
+###
+
+// comment on post
+
+POST http://localhost:5000/api/post/comment/66f42c11eb86bbc400877643
+Content-Type: application/json
+
+{
+    "text": "my first comment"
+}
