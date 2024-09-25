@@ -64,3 +64,15 @@ Content-Type: application/json
     "bio": "I'm tony stork",
     "link": "tonystork.com"
 }
+
+
+###
+
+// create post
+
+POST http://localhost:5000/api/post/create
+Content-Type: application/json
+
+{
+    "text": "My second post"
+}
