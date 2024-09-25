@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import {Schema, model} from 'mongoose';
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     username: {
       type: String,
@@ -23,14 +23,14 @@ const userSchema = new mongoose.Schema(
     },
     followers: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         default: [],
       },
     ],
     following: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         default: [],
       },
@@ -55,6 +55,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 export default User;
