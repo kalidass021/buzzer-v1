@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -51,6 +51,13 @@ const userSchema = new Schema(
       type: String,
       default: '',
     },
+    likedPosts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );

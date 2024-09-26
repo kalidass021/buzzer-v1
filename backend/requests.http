@@ -108,3 +108,9 @@ POST http://localhost:5000/api/post/like/66f4dd39924e819856a67a9d
 // get all posts
 
 GET http://localhost:5000/api/post/all
+
+
+###
+
+// get all liked posts
+GET http://localhost:5000/api/post/likes/66f2e09e34fd9cae91c1fdd5

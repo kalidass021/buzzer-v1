@@ -110,6 +110,8 @@ export const likeUnlikePost = async (req, res, next) => {
       // if user already liked the post
       // unlike the post
       await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+      // remove the postId from the user's likedPosts
+      await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
       res.status(200).json({ message: 'Post unliked successfully' });
       // we don't need to send any notification for unlike post
     }
@@ -117,6 +119,8 @@ export const likeUnlikePost = async (req, res, next) => {
     if (!userLikedPost) {
       // like the post
       post.likes.push(userId);
+      // push the postId into user's likedPosts
+      await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
       await post.save();
 
       // create a notification
@@ -148,7 +152,7 @@ export const getAllPosts = async (req, res, next) => {
         path: 'comments.user',
         select: '-password',
       });
-    
+
     // in the above code without populate method it will retutn posts with userId only
     // but we want another user details to display in the frontend, we're getting that using populate
     // by using select method we're unselecting the password
@@ -161,6 +165,36 @@ export const getAllPosts = async (req, res, next) => {
     res.status(200).json(posts);
   } catch (err) {
     console.error(`Error in getAllPosts ${err.message}`);
+    next(err);
+  }
+};
+
+export const getLikedPosts = async (req, res, next) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(errorHandler(404, 'User not found'));
+    }
+
+    const likedPosts = await Post.find({ _id: { $in: user.likedPosts } })
+      .populate({
+        path: 'user',
+        select: '-password',
+      })
+      .populate({
+        path: 'comments.user',
+        select: '-password',
+      });
+    // in the above code without populate method we'll get liked posts with only user's id
+    // but we need other details to display it in the frontend
+    // with select method we're deselecting the password
+
+    res.status(200).json(likedPosts);
+  } catch (err) {
+    console.error(`Error in getLikedPosts ${err.message}`);
     next(err);
   }
 };
