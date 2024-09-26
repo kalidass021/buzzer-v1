@@ -198,3 +198,64 @@ export const getLikedPosts = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getFollowingPosts = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(errorHandler(404, 'User not found'));
+    }
+
+    const following = user.following;
+
+    const feedPosts = await Post.find({ user: { $in: following } })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'user',
+        select: '-password',
+      })
+      .populate({
+        path: 'comments.user',
+        select: '-password',
+      });
+
+    // without populate method we'll only get userId
+    // with populate method we're getting the all user details to display in the frontend
+    // with select method we're deselecting the password
+
+    res.status(200).json(feedPosts);
+  } catch (err) {
+    console.error(`Error in getFollowingPosts ${err.message}`);
+    next(err);
+  }
+};
+
+export const getUserPosts = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+
+    const user = await User.findOne({ username });
+    if (!user) {
+      return next(errorHandler(404, 'User not found'));
+    }
+
+    const posts = await Post.find({ user: user._id })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'user',
+        select: '-password',
+      })
+      .populate({
+        path: 'comments.user',
+        select: '-password',
+      });
+      // without populate method we'll only get userId
+
+      res.status(200).json({posts});
+  } catch (err) {
+    console.error(`Error in getUserPosts ${err.message}`);
+    next(err);
+  }
+};

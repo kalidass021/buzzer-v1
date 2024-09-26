@@ -41,7 +41,7 @@ GET http://localhost:5000/api/user/profile/tonystork
 ###
 
 // follow or unfollow
-POST http://localhost:5000/api/user/follow/66f18d49fc50b0c7672a296b
+POST http://localhost:5000/api/user/follow/66f2c4c452cfac51e94877ae
 
 
 ###
@@ -114,3 +114,15 @@ GET http://localhost:5000/api/post/all
 
 // get all liked posts
 GET http://localhost:5000/api/post/likes/66f2e09e34fd9cae91c1fdd5
+
+
+###
+
+// get following posts
+GET http://localhost:5000/api/post/following
+
+
+###
+
+// get user posts
+GET http://localhost:5000/api/post/user/tonystork
