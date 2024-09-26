@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
 import User from '../models/user.model.js';
 import Post from '../models/post.model.js';
+import Notification from '../models/notification.model.js';
 import { errorHandler } from '../lib/utils/errorHandler.js';
 
 export const createPost = async (req, res, next) => {
@@ -65,30 +66,72 @@ export const deletePost = async (req, res, next) => {
 };
 
 export const commentOnPost = async (req, res, next) => {
-    try {
-        const {text} = req.body;
-        const postId = req.params.id;
-        const userId = req.user._id;
+  try {
+    const { text } = req.body;
+    const postId = req.params.id;
+    const userId = req.user._id;
 
-        if (!text) {
-            return next(errorHandler(400, 'Text field is required'));
-        }
-
-        const post = await Post.findById(postId);
-        if (!post) {
-            return next(errorHandler(404, 'Post not found'));
-        }
-        
-        const comment = {user: userId, text};
-
-        post.comments.push(comment);
-
-        await post.save();
-
-        res.status(200).json(post);
-
-    } catch (err) {
-        console.error(`Error in commentOnPost ${err.message}`);
-        next(err);
+    if (!text) {
+      return next(errorHandler(400, 'Text field is required'));
     }
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return next(errorHandler(404, 'Post not found'));
+    }
+
+    const comment = { user: userId, text };
+
+    post.comments.push(comment);
+
+    await post.save();
+
+    res.status(200).json(post);
+  } catch (err) {
+    console.error(`Error in commentOnPost ${err.message}`);
+    next(err);
+  }
+};
+
+export const likeUnlikePost = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const { id: postId } = req.params;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return next(errorHandler(404, 'Post not found'));
+    }
+
+    const userLikedPost = post.likes.includes(userId);
+
+    if (userLikedPost) {
+      // if user already liked the post
+      // unlike the post
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+      res.status(200).json({ message: 'Post unliked successfully' });
+      // we don't need to send any notification for unlike post
+    }
+    
+    if (!userLikedPost) {
+      // like the post
+      post.likes.push(userId);
+      await post.save();
+
+      // create a notification
+      const notification = new Notification({
+        from: userId,
+        to: post.user,
+        type: 'like',
+      });
+
+      await notification.save();
+
+      res.status(200).json({ message: 'Post liked successfully' });
+    }
+  } catch (err) {
+    console.error(`Error in likeUnlikePost ${err.message}`);
+    next(err);
+  }
 };

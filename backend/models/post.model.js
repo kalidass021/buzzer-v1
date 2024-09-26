@@ -1,39 +1,41 @@
-import {model, Schema} from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-const postSchema = new Schema({
+const postSchema = new Schema(
+  {
     // posted by user
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     text: {
-        type: String,
+      type: String,
     },
     img: {
-        type: String,
+      type: String,
     },
     likes: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
     ],
     comments: [
-        {
-            text: {
-                type: String,
-                required: true,
-            },
-            user: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-                required: true,
-            }
-        }
-    ]
-}, {timestamps: true});
-
+      {
+        text: {
+          type: String,
+          required: true,
+        },
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 const Post = model('Post', postSchema);
 

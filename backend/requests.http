@@ -17,8 +17,8 @@ POST http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
 {
-    "username": "tonystork",
-    "password": "tony123"
+    "username": "harrypotter",
+    "password": "harry1234"
 }
 
 ###
@@ -67,30 +67,37 @@ Content-Type: application/json
 
 
 ###
-
+// post routes
 // create post
 
 POST http://localhost:5000/api/post/create
 Content-Type: application/json
 
 {
-    "text": "My second post"
+    "text": "My first post"
 }
 
 
 ###
 
 // delete post
-DELETE http://localhost:5000/api/post/66f42e35bca2de6d1d9233e6
+DELETE http://localhost:5000/api/post/66f4407b9be8ef1a926e0027
 
 
 ###
 
 // comment on post
 
-POST http://localhost:5000/api/post/comment/66f42c11eb86bbc400877643
+POST http://localhost:5000/api/post/comment/66f4d517087c99627a820084
 Content-Type: application/json
 
 {
     "text": "my first comment"
 }
+
+
+###
+
+// like or unlike post
+
+POST http://localhost:5000/api/post/like/66f4dd39924e819856a67a9d
