@@ -113,7 +113,7 @@ export const likeUnlikePost = async (req, res, next) => {
       res.status(200).json({ message: 'Post unliked successfully' });
       // we don't need to send any notification for unlike post
     }
-    
+
     if (!userLikedPost) {
       // like the post
       post.likes.push(userId);
@@ -132,6 +132,35 @@ export const likeUnlikePost = async (req, res, next) => {
     }
   } catch (err) {
     console.error(`Error in likeUnlikePost ${err.message}`);
+    next(err);
+  }
+};
+
+export const getAllPosts = async (req, res, next) => {
+  try {
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'user',
+        select: '-password',
+      })
+      .populate({
+        path: 'comments.user',
+        select: '-password',
+      });
+    
+    // in the above code without populate method it will retutn posts with userId only
+    // but we want another user details to display in the frontend, we're getting that using populate
+    // by using select method we're unselecting the password
+
+    // if posts.length === 0
+    if (!posts.length) {
+      return res.status(200).json([]);
+    }
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(`Error in getAllPosts ${err.message}`);
     next(err);
   }
 };
