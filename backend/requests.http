@@ -17,8 +17,8 @@ POST http://localhost:5000/api/auth/signin
 Content-Type: application/json
 
 {
-    "username": "harrypotter",
-    "password": "harry1234"
+    "username": "tonystork",
+    "password": "tony123"
 }
 
 ###
@@ -126,3 +126,16 @@ GET http://localhost:5000/api/post/following
 
 // get user posts
 GET http://localhost:5000/api/post/user/tonystork
+
+
+###
+
+// notification routes
+// get all notifications
+GET http://localhost:5000/api/notification
+
+
+###
+
+// delete all notifications
+DELETE http://localhost:5000/api/notification
