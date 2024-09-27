@@ -1,8 +1,10 @@
+import { Outlet } from "react-router-dom";
+
 const App = () => {
   return (
-    <>
-      <div className='text-3xl font-bold underline'>Hello, World!</div>
-    </>
+    <div>
+      <Outlet />
+    </div>
   );
 };
 
