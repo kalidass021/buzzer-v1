@@ -6,6 +6,7 @@ import './index.css';
 import Home from './pages/home/Home.jsx';
 import SignIn from './pages/auth/signin/SignIn.jsx';
 import SignUp from './pages/auth/signup/SignUp.jsx';
+import ErrorDisplay from './components/error/ErrorDisplay.jsx';
 
 const appRouter = createBrowserRouter([
   {
@@ -25,7 +26,8 @@ const appRouter = createBrowserRouter([
         element: <SignUp />,
       },
     ],
-    // todo: not found page
+    // not found page
+    errorElement: <ErrorDisplay />
   },
 ]);
 
