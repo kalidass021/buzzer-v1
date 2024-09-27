@@ -6,7 +6,7 @@ import connectMongoDB from './db/connectMongoDB.js';
 import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
 import postRoutes from './routes/post.route.js';
-
+import notificationRoutes from './routes/notification.route.js';
 
 const app = express();
 // dot env configuration
@@ -29,6 +29,7 @@ app.use(cookieParser()); // extracting cookies from the browser
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/notification', notificationRoutes);
 
 // middleware to handle the errors
 app.use((err, req, res, next) => {
