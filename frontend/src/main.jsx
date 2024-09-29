@@ -7,6 +7,8 @@ import Home from './pages/home/Home.jsx';
 import SignIn from './pages/auth/signin/SignIn.jsx';
 import SignUp from './pages/auth/signup/SignUp.jsx';
 import ErrorDisplay from './components/error/ErrorDisplay.jsx';
+import Notifications from './pages/notifications/Notifications.jsx';
+import Profile from './pages/profile/Profile.jsx';
 
 const appRouter = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const appRouter = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
+      {
+        path: '/notifications',
+        element: <Notifications />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
+      }
     ],
     // not found page
     errorElement: <ErrorDisplay />
