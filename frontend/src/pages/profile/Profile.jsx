@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Posts from '../../components/common/Posts';
 import ProfileHeaderSkeleton from '../../components/skeletons/ProfileHeaderSkeleton';
-// import EditProfileModal from './EditProfileModal';
+import EditProfileModal from './EditProfileModal';
 
 import { POSTS } from '../../utils/db/dummy';
 
@@ -119,7 +119,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className='flex justify-end px-4 mt-5'>
-                {/* {isMyProfile && <EditProfileModal />} */}
+                {isMyProfile && <EditProfileModal />}
                 {!isMyProfile && (
                   <button
                     className='btn btn-outline rounded-full btn-sm'
