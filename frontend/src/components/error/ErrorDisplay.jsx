@@ -9,7 +9,7 @@ const ErrorDisplay = () => {
     <h3>
         {err.status}: {err.statusText}
     </h3>
-    <h3>{err.data}</h3>
+    <h3>{err.datad}</h3>
   </div>;
 };
 
