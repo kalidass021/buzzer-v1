@@ -32,7 +32,7 @@ const appRouter = createBrowserRouter([
         element: <Notifications />,
       },
       {
-        path: '/profile',
+        path: '/profile/:username',
         element: <Profile />,
       }
     ],
