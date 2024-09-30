@@ -25,7 +25,7 @@ const Profile = () => {
 
   const user = {
     _id: '1',
-    fullName: 'John Doe',
+    fullName: 'Harry Potter',
     username: 'johndoe',
     profileImg: '/avatars/boy2.png',
     coverImg: '/cover.png',
@@ -87,12 +87,14 @@ const Profile = () => {
 
                 <input
                   type='file'
+                  accept='image/*'
                   hidden
                   ref={coverImgRef}
                   onChange={(e) => handleImgChange(e, 'coverImg')}
                 />
                 <input
                   type='file'
+                  accept='image/*'
                   hidden
                   ref={profileImgRef}
                   onChange={(e) => handleImgChange(e, 'profileImg')}
@@ -153,12 +155,12 @@ const Profile = () => {
                       <>
                         <FaLink className='w-3 h-3 text-slate-500' />
                         <a
-                          href='https://youtube.com/@asaprogrammer_'
+                          href='https://youtube.com/'
                           target='_blank'
                           rel='noreferrer'
                           className='text-sm text-blue-500 hover:underline'
                         >
-                          youtube.com/@asaprogrammer_
+                          youtube.com/
                         </a>
                       </>
                     </div>
